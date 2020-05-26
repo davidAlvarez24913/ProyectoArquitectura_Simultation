@@ -2,54 +2,83 @@ package cuarto.david;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main extends  JFrame {
-
-    public  Main(){
-        super("SIMULACION MÁQUINA IAS");
-        this.setSize(600,400);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+public class Main{
     public static void main(String[] args) {
-        Main  ventana = new Main();
-        ventana.setVisible(true);
-        JButton boton1= new JButton();
-        JButton boton2= new JButton();
-        JButton boton3 = new JButton();
-        JButton boton4 = new JButton();
+        Ventana  ventana = new Ventana();
+    }
+}
 
-        boton1.setText("Simulacion sumar");
-        boton2.setText("simulacion restar");
-        boton3.setText("Simulacion multiplicar");
-        boton4.setText("Simulacion dividir");
-        JTextArea jtx = new JTextArea( "MEMORY" +
+class Ventana extends JFrame{
+    Ventana(){
+        // Caracteristicas de la ventana
+        setTitle("SIMULACION MÁQUINA IAS");
+        setSize(800,500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        setVisible(true);
+
+        // Agregamos las capas en su respectiva posicion del BorderLayout
+        // add(new CapaNorth(), BorderLayout.NORTH);    Se habilitara cuando se necesite esa capa
+        add(new CapaSouth(), BorderLayout.SOUTH);
+        add(new CapaWest(), BorderLayout.WEST);
+        // add(new CapaEast(), BorderLayout.EAST); Se habilitara cuando se necesite esa capa
+        add(new CapaCenter(), BorderLayout.CENTER);
+    }
+}
+/*
+class CapaNorth extends JPanel{
+
+}
+*/
+class CapaSouth extends JPanel{
+    CapaSouth(){
+        JButton btnSumar        = new JButton();
+        JButton btnRestar       = new JButton();
+        JButton btnMultiplicar  = new JButton();
+        JButton btnDividir      = new JButton();
+
+        btnSumar.setText("Simulacion sumar");
+        btnRestar .setText("Simulacion restar");
+        btnMultiplicar.setText("Simulacion multiplicar");
+        btnDividir.setText("Simulacion dividir");
+
+        add(btnSumar);
+        add(btnRestar );
+        add(btnMultiplicar);
+        add(btnDividir);
+    }
+}
+
+class CapaWest extends JPanel{
+    CapaWest(){
+        JTextArea areaTexto = new JTextArea( "MEMORY" +
                 "\n1. LOAD M(X) 500, ADD M(X) 501" +
                 "\n2. STOR M(X)500" +
                 "\n INSTRUCCIONS" +
                 "\n 500. 3" +
                 "\n 501. 4");
-        jtx.setVisible(true);
-        boton1.setVisible(true);
-        boton2.setVisible(true);
-        boton3.setVisible(true);
-        boton4.setVisible(true);
-        //Array bidimensional de objetos con los datos de la tabla
+
+        add(areaTexto);
+    }
+}
+/*
+class CapaEast extends JPanel{
+
+}
+*/
+class CapaCenter extends JPanel{
+    CapaCenter(){
+        // Array bidimensional de objetos con los datos de la tabla
         String[][] data = {{"PC",new String(String.valueOf("1"))},
-        {"MAR",new String(String.valueOf(500))}, {"MBR",new String(String.valueOf(3))},{"IR",new String(String.valueOf("LOAD M(X)"))},{"IBR",new String(String.valueOf("ADD M(X)  501"))}
-        ,{"AC",new String(String.valueOf(3))}};
+                {"MAR",new String(String.valueOf(500))}, {"MBR",new String(String.valueOf(3))},{"IR",new String(String.valueOf("LOAD M(X)"))},{"IBR",new String(String.valueOf("ADD M(X)  501"))}
+                ,{"AC",new String(String.valueOf(3))}};
         String[] columnNames = {"SECCION ALU","INSTRUCCION"};
 
         final JTable table = new JTable( data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 80));
         JScrollPane scrollpane = new JScrollPane(table);
-        ventana.add(jtx);
-        ventana.add(scrollpane, BorderLayout.CENTER);
 
-        ventana.getContentPane().setLayout(new FlowLayout());
-        ventana.add(boton1);
-        ventana.add(boton2);
-        ventana.add(boton3);
-        ventana.add(boton4);
-
-
+        // add(jtx);
+        add(scrollpane, BorderLayout.CENTER);
     }
 }
